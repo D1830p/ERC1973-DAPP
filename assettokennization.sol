@@ -289,6 +289,18 @@ contract PaintingToken is ERC20Detailed {
 }
 
 
+//incentivetoken contract
+
+contract IncentiveToken is ERC20Detailed {
+    using SafeMath for uint256;
+    
+    uint256 private _totalSupply;
+
+    mapping (address => uint256) private _balances;
+
+    mapping (address => mapping (address => uint256)) private _allowances;
+    
+    uint256 public basePercent = 100;
 
 // distributor properties
     uint256 public roundMask;
@@ -310,7 +322,7 @@ contract PaintingToken is ERC20Detailed {
     
 
      modifier isAuthorized() {
-//        require(isMinter(msg.sender));
+
 	    require(contractInstance.getParticipantState(msg.sender) == true);
         _;
     }
@@ -395,7 +407,7 @@ contract PaintingToken is ERC20Detailed {
         emit Approval(owner, spender, amount);
     }
     
-    // for reward we are using the same contract
+    
 
 
     function trigger() external isAuthorized returns (bool) {
