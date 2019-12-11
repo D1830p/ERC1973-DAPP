@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/token/ERC20/ERC20Detailed.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/math/SafeMath.sol";
-
+import "./PaintingToken.sol";
 //incentivetoken contract
 
 contract IncentiveToken is ERC20Detailed {
@@ -24,12 +24,13 @@ contract IncentiveToken is ERC20Detailed {
     uint256 public tokensPerBlock; 
     uint256 public blockFreezeInterval; 
     address public tokencontractAddress = address(this);
-    address public tokencontractAddressPainting = address(0xB64a38D37d3a45dbb5337F32980C08B5E07651Cf);
-    PaintingToken contractInstance = PaintingToken(tokencontractAddressPainting);
+
+    PaintingToken public contractInstance ;
     mapping(address => uint256) public participantMask;
     
-    constructor(string memory name, string memory symbol, uint256 totalSupply,uint256 _tokensPerBlock, uint256 _blockFreezeInterval) ERC20Detailed(name,symbol,2) public {
+    constructor(string memory name, string memory symbol, uint256 totalSupply,uint256 _tokensPerBlock, uint256 _blockFreezeInterval,address addr) ERC20Detailed(name,symbol,2) public {
         _totalSupply = totalSupply;
+        contractInstance=PaintingToken(addr);
         _balances[msg.sender] = _totalSupply;
 	    lastMintedBlockNumber = block.number;
         tokensPerBlock = _tokensPerBlock;
